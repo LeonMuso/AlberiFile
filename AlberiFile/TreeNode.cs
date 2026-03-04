@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,8 +44,8 @@ namespace AlberiFile
             foreach (var r in righe)
             {
                 string[] parti = r.Split(' ');
-                string child = parti[0];
-                string father = parti[1];
+                string child = parti[0].Trim();
+                string father = parti[1].Trim();
 
                 if (father == child)
                 {
@@ -74,9 +75,56 @@ namespace AlberiFile
             return true;
         }
 
-        //public static TreeNode<T> AlberoDaFile2()
-        //{
+        public static TreeNode<T> AlberoDaFile2()
+        {
+            string[] righe = File.ReadAllLines("AlberoFile2.txt");
+            string valoreRadice = righe[0].Trim();
+            TreeNode<T> root = new TreeNode<T>((T)Convert.ChangeType(valoreRadice, typeof(T)));
+            List<TreeNode<T>> ultimiNodiPerLivello = new List<TreeNode<T>>();
+            ultimiNodiPerLivello.Add(root);
+            foreach (var r in righe)
+            {
+                int livello = 0;
+                while (livello < r.Length && r[livello] == '-')
+                {
+                    livello++;
+                }
+                string valore = r.Substring(livello).Trim();
+                TreeNode<T> nodo = new TreeNode<T>((T)Convert.ChangeType(valore, typeof(T)));
+                if (livello > 0 && livello <= ultimiNodiPerLivello.Count)
+                {
+                    TreeNode<T> padre = ultimiNodiPerLivello[livello - 1];
+                    padre.Nodes.Add(nodo);
+                    if (livello < ultimiNodiPerLivello.Count)
+                    {
+                        ultimiNodiPerLivello[livello] = nodo;
+                    }
+                    else
+                    {
+                        ultimiNodiPerLivello.Add(nodo);
+                    }
+                }
+            }
+            return root;
+        }
 
-        //}
+        public bool FileDaAlbero2(TreeNode<T> root)
+        {
+            if (root == null) return false;
+            List<string> righe = new List<string>();
+            CreaLivelli(root,0,righe);
+            File.WriteAllLines("FileAlbero2.txt",righe);
+            return true;
+        }
+        public void CreaLivelli(TreeNode<T> nodo, int livello, List<string> righe)
+        {
+            if (nodo == null) return;
+            string trattini = new string('-', livello);
+            righe.Add(trattini + nodo.Value.ToString());
+            foreach (var n in nodo.Nodes)
+            {
+                CreaLivelli(n, livello + 1, righe);
+            }
+        }
     }
 }
