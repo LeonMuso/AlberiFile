@@ -62,5 +62,16 @@ namespace AlberiFile
             }
             return root;
         }
+
+        public bool FileDaAlbero(TreeNode<T> root)
+        {
+            if (root == null) return false;
+            foreach (var n in root.Nodes)
+            {
+                File.AppendAllText("C:\\Users\\pinos\\OneDrive\\Desktop\\FileAlbero.txt", $"{n.Value} {root.Value}\n");
+                FileDaAlbero(n);
+            }
+            return true;
+        }
     }
 }
