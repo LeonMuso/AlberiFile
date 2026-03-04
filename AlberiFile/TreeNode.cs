@@ -73,5 +73,10 @@ namespace AlberiFile
             }
             return true;
         }
+
+        public static TreeNode<T> AlberoDaFile2()
+        {
+
+        }
     }
 }
