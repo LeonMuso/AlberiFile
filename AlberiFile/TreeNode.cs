@@ -39,7 +39,7 @@ namespace AlberiFile
         public static TreeNode<T> AlberoDaFile()
         {
             TreeNode<T> root = null;
-            string[] righe = File.ReadAllLines("C:\\Users\\pinos\\OneDrive\\Desktop\\AlberoFile.txt");
+            string[] righe = File.ReadAllLines("AlberoFile.txt");
             foreach (var r in righe)
             {
                 string[] parti = r.Split(' ');
@@ -68,15 +68,15 @@ namespace AlberiFile
             if (root == null) return false;
             foreach (var n in root.Nodes)
             {
-                File.AppendAllText("C:\\Users\\pinos\\OneDrive\\Desktop\\FileAlbero.txt", $"{n.Value} {root.Value}\n");
+                File.AppendAllText("FileAlbero.txt", $"{n.Value} {root.Value}\n");
                 FileDaAlbero(n);
             }
             return true;
         }
 
-        public static TreeNode<T> AlberoDaFile2()
-        {
+        //public static TreeNode<T> AlberoDaFile2()
+        //{
 
-        }
+        //}
     }
 }

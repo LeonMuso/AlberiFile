@@ -8,7 +8,7 @@
             albero.StampaAlbero(albero);
             if (albero.FileDaAlbero(albero))
             {
-                Console.WriteLine("dio cane");
+                Console.WriteLine("funziona yippie");
             }
         }
     }
