@@ -12,6 +12,7 @@
             }
             TreeNode<string> albero2 = TreeNode<string>.AlberoDaFile2();
             albero2.StampaAlbero(albero2, 0);
+            
             if (albero2.FileDaAlbero2(albero2))
             {
                 Console.WriteLine("funziona yippie");
