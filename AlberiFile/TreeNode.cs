@@ -15,12 +15,12 @@ namespace AlberiFile
         {
             Value = value;
         }
-        public void StampaAlbero(TreeNode<T> node)
+        public void StampaAlbero(TreeNode<T> node, int level)
         {
-            Console.WriteLine(node.Value);
+            Console.WriteLine(new string('-', level) + node.Value);
             foreach (var nodes in node.Nodes)
             {
-                StampaAlbero(nodes);
+                StampaAlbero(nodes, level + 1);
             }
         }
         public static TreeNode<T> CercaNodo(TreeNode<T> node, T value)
@@ -80,21 +80,27 @@ namespace AlberiFile
             string[] righe = File.ReadAllLines("AlberoFile2.txt");
             string valoreRadice = righe[0].Trim();
             TreeNode<T> root = new TreeNode<T>((T)Convert.ChangeType(valoreRadice, typeof(T)));
+
             List<TreeNode<T>> ultimiNodiPerLivello = new List<TreeNode<T>>();
             ultimiNodiPerLivello.Add(root);
+
             foreach (var r in righe)
             {
+
                 int livello = 0;
                 while (livello < r.Length && r[livello] == '-')
                 {
                     livello++;
                 }
+
                 string valore = r.Substring(livello).Trim();
                 TreeNode<T> nodo = new TreeNode<T>((T)Convert.ChangeType(valore, typeof(T)));
+
                 if (livello > 0 && livello <= ultimiNodiPerLivello.Count)
                 {
                     TreeNode<T> padre = ultimiNodiPerLivello[livello - 1];
                     padre.Nodes.Add(nodo);
+
                     if (livello < ultimiNodiPerLivello.Count)
                     {
                         ultimiNodiPerLivello[livello] = nodo;
@@ -112,8 +118,8 @@ namespace AlberiFile
         {
             if (root == null) return false;
             List<string> righe = new List<string>();
-            CreaLivelli(root,0,righe);
-            File.WriteAllLines("FileAlbero2.txt",righe);
+            CreaLivelli(root, 0, righe);
+            File.WriteAllLines("FileAlbero2.txt", righe);
             return true;
         }
         public void CreaLivelli(TreeNode<T> nodo, int livello, List<string> righe)
