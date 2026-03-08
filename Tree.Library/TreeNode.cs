@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlberiFile
+namespace Tree.Library
 {
-    internal class TreeNode<T>
+    public class TreeNode<T>
     {
         public T Value { get; set; }
         public List<TreeNode<T>> Nodes { get; set; } = new List<TreeNode<T>>();
@@ -15,12 +16,12 @@ namespace AlberiFile
         {
             Value = value;
         }
-        public void StampaAlbero(TreeNode<T> node)
+        public void StampaAlbero(TreeNode<T> node, int level)
         {
-            Console.WriteLine(node.Value);
+            Console.WriteLine(new string('-', level)+ node.Value);
             foreach (var nodes in node.Nodes)
             {
-                StampaAlbero(nodes);
+                StampaAlbero(nodes, level + 1);
             }
         }
         public static TreeNode<T> CercaNodo(TreeNode<T> node, T value)
@@ -112,8 +113,8 @@ namespace AlberiFile
         {
             if (root == null) return false;
             List<string> righe = new List<string>();
-            CreaLivelli(root,0,righe);
-            File.WriteAllLines("FileAlbero2.txt",righe);
+            CreaLivelli(root, 0, righe);
+            File.WriteAllLines("FileAlbero2.txt", righe);
             return true;
         }
         public void CreaLivelli(TreeNode<T> nodo, int livello, List<string> righe)
